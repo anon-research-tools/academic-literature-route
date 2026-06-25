@@ -239,6 +239,32 @@ Skill 会尽量把每条结果分成 A/B/C/D 四类：
 
 如果某个工具不可用，它仍然可以输出人工检索路线和复核清单。
 
+## API key 怎么配置？
+
+这个 Skill 的基础部分不一定需要 API key。即使没有 key，它仍然可以帮助你拆解选题、设计检索式、列出人工补查路线、生成文献筛选表和审计清单。
+
+但如果你希望它调用更多机器检索能力，就可能需要为不同服务配置 API key：
+
+| 功能来源 | 可能需要的环境变量 | 用途 |
+| --- | --- | --- |
+| Kimi / Moonshot | `KIMI_API_KEY` 或 `MOONSHOT_API_KEY` | 中文学术网页线索、机构页面、期刊页面、中文数据库线索 |
+| TinyFish | `TINYFISH_API_KEY` | 结构化网页搜索、站点定向检索 |
+| AnySearch | `ANYSEARCH_API_KEY` | 实时网页搜索、学术垂直搜索、批量检索式扩展 |
+| Grok/X / OpenRouter | `OPENROUTER_API_KEY` | X/Twitter 上的新论文、预印本、作者发布、工具和数据集线索 |
+
+最推荐的做法是把 key 放在你自己的本机环境变量、系统钥匙串或密码管理器里，而不是写进仓库文件。例如在 macOS 或 Linux 的 shell 配置中可以使用这种形式：
+
+```bash
+export KIMI_API_KEY="你的 key"
+export TINYFISH_API_KEY="你的 key"
+export ANYSEARCH_API_KEY="你的 key"
+export OPENROUTER_API_KEY="你的 key"
+```
+
+上面的命令只是示例。公开仓库、公开笔记、论文附录、截图、聊天记录、README、`SKILL.md`、脚本和命令历史里都不应该出现真实 key。
+
+也要注意：API key 只决定“能不能调用某些增强检索源”，不决定文献是否可靠。Kimi、AnySearch、TinyFish、Grok/X 这类结果仍然只是线索，最终仍需要通过 DOI、出版社页面、数据库记录、开放元数据或机构仓储核验。
+
 ## 使用时要注意什么？
 
 ### 1. 不要把 AI 搜索结果直接当参考文献
