@@ -1,0 +1,3 @@
+display_name: 学术论文搜索
+short_description: 为选题建立可追溯的海内外学术论文检索路线，含 AnySearch 与 Grok/X 线索层。
+default_prompt: 请围绕这个选题搜索并筛选海内外学术论文，给出检索式、来源覆盖、AnySearch/Grok/X/Kimi 线索核验表、可引文献、精读队列和人工复核清单。
