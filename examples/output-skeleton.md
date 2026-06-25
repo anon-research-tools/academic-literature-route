@@ -1,76 +1,76 @@
-# Literature Search Output Skeleton
+# 文献检索输出模板
 
-## 1. Search Terms
+## 1. 检索词
 
-| Layer | Query | Language | Notes |
+| 层级 | 检索式 | 语言 | 备注 |
 | --- | --- | --- | --- |
-| Exact title |  |  |  |
-| Object + problem |  |  |  |
-| Object + field |  |  |  |
-| Object + method |  |  |  |
-| Site-directed |  |  |  |
+| 题名精确检索 |  |  |  |
+| 研究对象 + 问题意识 |  |  |  |
+| 研究对象 + 学科领域 |  |  |  |
+| 研究对象 + 方法词 |  |  |  |
+| 站点定向检索 |  |  |  |
 
-## 2. Source Coverage
+## 2. 来源覆盖
 
-| Source | Type | Used | Notes |
+| 来源 | 类型 | 是否使用 | 备注 |
 | --- | --- | --- | --- |
-| OpenAlex | academic_metadata |  |  |
-| Crossref | academic_metadata |  |  |
-| Semantic Scholar | academic_metadata |  |  |
-| CNKI | database_record |  |  |
-| Wanfang | database_record |  |  |
-| Google Scholar | discovery/citation |  |  |
-| AnySearch | anysearch_lead |  |  |
-| Kimi/TinyFish | llm_web_lead |  |  |
-| Grok/X | x_social_lead |  |  |
+| OpenAlex | 开放学术元数据 |  |  |
+| Crossref | 开放学术元数据 |  |  |
+| Semantic Scholar | 开放学术元数据 |  |  |
+| CNKI | 中文数据库记录 |  |  |
+| 万方 | 中文数据库记录 |  |  |
+| Google Scholar | 发现与引文追踪 |  |  |
+| AnySearch | 网页或学术搜索线索 |  |  |
+| Kimi / TinyFish | AI 或网页线索 |  |  |
+| Grok/X | 社交媒体线索 |  |  |
 
-## 3. Candidate Literature Table
+## 3. 候选文献表
 
-| Grade | Title | Authors | Year | Venue | DOI/URL | Source type | Hit query | Note |
+| 等级 | 题名 | 作者 | 年份 | 刊物/会议/来源 | DOI/URL | 来源类型 | 命中检索式 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | A/B/C/D |  |  |  |  |  |  |  |  |
 
-## 4. Direct-Citation Candidates
+## 4. 可直接引用文献
 
-| Title | Why It Supports The Project | Verification Source |
+| 题名 | 为什么支持本研究 | 核验来源 |
 | --- | --- | --- |
 |  |  |  |
 
-## 5. Next Close-Reading Queue
+## 5. 下一步精读队列
 
-| Priority | Title | Reason |
+| 优先级 | 题名 | 理由 |
 | --- | --- | --- |
 | 1 |  |  |
 
-## 6. Manual Follow-Up Checklist
+## 6. 人工补查清单
 
-- [ ] CNKI exact-title search
-- [ ] Wanfang exact-title search
-- [ ] CQVIP exact-title search
-- [ ] Google Scholar cited-by check
-- [ ] Web of Science / Scopus check if available
-- [ ] Key journal table-of-contents check
+- [ ] CNKI 题名精确检索
+- [ ] 万方题名精确检索
+- [ ] 维普题名精确检索
+- [ ] Google Scholar 被引检索
+- [ ] Web of Science / Scopus 检索
+- [ ] 重点期刊目录复核
 
-## 7. Citation-Chaining Expansion
+## 7. 引文链扩展
 
-| Seed paper | Backward leads | Forward leads | Similar-paper leads |
+| 种子论文 | 向前引用线索 | 向后被引线索 | 相似论文线索 |
 | --- | --- | --- | --- |
 |  |  |  |  |
 
-## 8. Search Audit Log
+## 8. 检索审计日志
 
-| Date | Source | Exact query | Filters | Hits | Retained | Exclusion notes |
+| 日期 | 来源 | 准确检索式 | 过滤条件 | 命中数 | 保留数 | 排除说明 |
 | --- | --- | --- | --- | --- | --- | --- |
 |  |  |  |  |  |  |  |
 
-## 9. Excluded Results
+## 9. 排除结果
 
-| Title/URL | Reason |
+| 题名/URL | 排除理由 |
 | --- | --- |
-|  | Duplicate / off-topic / non-academic / not verifiable |
+|  | 重复 / 跑题 / 非学术材料 / 无法核验 |
 
-## 10. LLM, Web, Or Social Lead Verification
+## 10. AI、网页或社交线索核验
 
-| Claimed item | Lead source | Stable source checked | Fields confirmed | Status |
+| 声称条目 | 线索来源 | 已检查的稳定来源 | 已确认字段 | 状态 |
 | --- | --- | --- | --- | --- |
-|  |  |  |  | Unverified / verified / rejected |
+|  |  |  |  | 未核验 / 已核验 / 已排除 |

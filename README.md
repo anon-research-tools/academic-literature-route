@@ -1,126 +1,198 @@
-# Academic Literature Route / 学术论文搜索
+# 学术论文搜索 Skill
 
-一个用于学术论文检索的 Codex Skill。它把“找论文”拆成一条可追溯的路线：拆题、扩展检索式、多源发现、稳定来源核验、A/B/C/D 分级、引文链扩展和人工复核清单。
+这是一个用于 **学术论文检索、筛选和整理** 的 Codex Skill。它不是简单地帮你“搜几篇论文”，而是把一次学术检索拆成一条可以复查、可以解释、可以继续扩展的路线。
 
-它特别适合这些场景：
+它适合用在这些场景：
 
-- 围绕一个论文题目、综述题目或课题申报题名搜集海内外研究。
-- 需要同时覆盖中文数据库、海外索引、开放元数据、出版社页面和实时网页线索。
-- 想区分“线索”和“可引用文献”，避免把 LLM 或网页搜索结果直接当成参考文献。
-- 需要保留检索式、命中数、筛选理由和人工复核步骤，便于复查或写方法说明。
+- 你有一个论文题目，想知道国内外已经有哪些相关研究。
+- 你正在写文献综述，需要一批可靠、可引用、分层筛选过的文献。
+- 你在准备课题申报、开题报告、论文修改，需要说明“我是怎么检索文献的”。
+- 你不想把网页搜索、AI 搜索、社交媒体线索直接当成参考文献，而是希望先核验再使用。
+- 你需要同时考虑中文数据库、海外数据库、开放学术元数据、出版社网页、机构仓储、预印本和实时网页线索。
 
-## What Makes It Different
+## 这个 Skill 是干嘛的？
 
-多数搜索助手只给一串文献标题。这个 Skill 的重点不是堆积结果，而是建立可审计的检索过程：
+一句话说：它帮助你把一个选题变成一套可追踪的文献检索方案。
 
-1. **检索式先行**：先把选题拆成研究对象、领域、问题框架、方法词，再生成中文、英文和站点定向检索式。
-2. **线索分层**：OpenAlex、Crossref、Semantic Scholar、Kimi、TinyFish、AnySearch、Grok/X、Google Scholar、CNKI 等来源各有不同身份。
-3. **核验后再引用**：LLM、网页和社交媒体结果只能作为 lead，必须经过 DOI、出版社页面、开放元数据、数据库记录或仓储页面核验，才可进入直接引用列表。
-4. **A/B/C/D 分级**：把文献分为可直接引用、值得细读、背景材料、排除项。
-5. **引文链扩展**：从强种子文献出发做 backward chaining、forward chaining 和 similar-paper expansion。
-6. **PRISMA-S 式审计**：记录搜索源、检索式、日期、过滤条件、命中数、保留数和排除理由。
+普通搜索通常只给你一串标题，里面可能有重复、跑题、网页文章、图书介绍，甚至还有 AI 编出来的错误信息。这个 Skill 的目标不同，它更关心：
 
-## Install
+- 这个选题应该用哪些中文词、英文词、同义词、历史术语来搜？
+- 哪些数据库、期刊平台、出版社页面、开放索引需要查？
+- 哪些结果只是线索，哪些结果已经可以作为正式参考文献？
+- 哪些文献应该优先精读，哪些只适合做背景，哪些应该排除？
+- 检索过程能不能留下记录，方便以后复查、补查或写进研究方法说明？
 
-Clone this repository into your Codex skills directory:
+所以，它更像一个“学术检索路线规划器”和“文献筛选审计表生成器”。
+
+## 怎么安装？
+
+把这个仓库克隆到你的 Codex skills 目录：
 
 ```bash
 mkdir -p ~/.codex/skills
 git clone https://github.com/anon-research-tools/academic-literature-route.git ~/.codex/skills/academic-literature-route
 ```
 
-Restart Codex or reload skills if your runtime requires it.
+然后重启 Codex，或者按你的 Codex 版本要求重新加载 skills。
 
-## How To Use
+## 怎么使用？
 
-In Codex, ask for the skill by name:
+在 Codex 里直接点名这个 Skill 即可，例如：
 
 ```text
 用“学术论文搜索”这个 Skill，围绕“中古佛教写经制度与知识生产”搜索并筛选海内外学术论文。
 ```
 
-Or:
+也可以说得更具体：
 
 ```text
-Use the Academic Literature Route skill to build a traceable literature-search route for:
-"Buddhist manuscript culture and institutional knowledge production in medieval China".
+用“学术论文搜索”这个 Skill，帮我为这个开题题目设计一套文献检索路线：
+《数字人文视野下汉文佛教目录的知识组织研究》
+
+请给出中文检索词、英文检索词、重点数据库、候选文献分级、可直接引用文献、精读队列和后续人工复核清单。
 ```
 
-For a substantial task, the expected output includes:
+如果你已经有论文草稿，也可以这样用：
 
-- Search terms: Chinese, English, and site-directed.
-- Source coverage: machine sources, Chinese manual sources, overseas manual sources.
-- Candidate literature table: title, authors, year, venue, URL/DOI, source, hit query, grade, note.
-- Direct-citation candidates.
-- Next close-reading queue.
-- Manual follow-up checklist.
-- Citation-chaining expansion from seed papers.
-- Search audit log with exact database queries and hit counts.
-- Excluded-result rules and examples.
-- Optional AnySearch, Kimi, TinyFish, Grok/X, or social-lead verification tables.
+```text
+用“学术论文搜索”这个 Skill，根据这篇论文草稿的主题，补一轮国内外研究检索。
+请区分已经核验的正式文献、网页线索、AI 搜索线索和需要人工确认的条目。
+```
 
-## Method
+## 它会输出什么？
 
-The Skill works as a methodological wrapper around whatever search tools your agent environment can actually access.
+一次比较完整的检索，通常会输出这些内容：
 
-### 1. Topic Parsing
+1. **检索词表**：中文词、英文词、同义词、历史术语、站点定向检索式。
+2. **来源覆盖表**：哪些机器检索源、中文数据库、海外索引、出版社平台、期刊平台已经覆盖。
+3. **候选文献表**：题名、作者、年份、刊物或会议、DOI/链接、来源、命中检索式、等级、备注。
+4. **可直接引用文献**：已经核验、和选题直接相关、可以进入参考文献候选区的条目。
+5. **精读队列**：值得下一步认真阅读的文献。
+6. **人工复核清单**：需要你去 CNKI、万方、Web of Science、Scopus、Google Scholar 等平台继续确认的事项。
+7. **引文链扩展**：从重要种子文献继续向前查参考文献、向后查被引文献。
+8. **检索审计日志**：记录检索源、检索式、检索日期、过滤条件、命中数、保留数和排除理由。
+9. **排除项说明**：哪些结果因为重复、跑题、不是论文、无法核验而被排除。
+10. **AI / 网页 / 社交媒体线索核验表**：说明哪些只是线索，哪些已经通过稳定来源核验。
 
-The topic is decomposed into four term groups:
+## 它的基本原理
 
-- Research object: texts, people, institutions, corpus, period, region.
-- Field: religious studies, linguistics, digital humanities, library science, history, philology, etc.
-- Problem frame: transmission, reception, institutional change, knowledge production, comparison, etc.
-- Method terms: bibliography, corpus, database, text mining, knowledge graph, citation analysis.
+这个 Skill 的核心原则是：**先建立检索路线，再判断文献价值；先把线索和证据分开，再决定能不能引用。**
 
-### 2. Query Expansion
+它大致按下面几步工作。
 
-The agent generates layered search strings:
+### 第一步：拆解选题
 
-- Exact title plus `论文`.
-- Object + problem frame.
-- Object + field.
-- Object + method.
-- Synonyms and historical terms.
-- English equivalents.
-- `site:` queries for specific databases, journals, publishers, or repositories.
+一个题目通常不是一个检索词就能覆盖的。Skill 会先把题目拆成几组概念：
 
-### 3. Source Layering
+- **研究对象**：文本、人物、机构、语料、时代、地域等。
+- **学科领域**：宗教学、语言学、数字人文、图书情报、历史学、文献学等。
+- **问题意识**：传播、接受、制度变化、知识生产、比较研究、本土化等。
+- **方法词**：目录学、语料库、数据库、文本挖掘、知识图谱、引文分析等。
 
-The Skill distinguishes source types:
+这样做的好处是，检索不会只围绕题目字面展开，而是能覆盖相关研究的不同说法。
 
-- `academic_metadata`: OpenAlex, Crossref, Semantic Scholar, PubMed, etc.
-- `database_record`: CNKI, Wanfang, CQVIP, JSTOR, Web of Science, Scopus, etc.
-- `publisher_page`: journal or publisher pages.
-- `repository`: arXiv, Zenodo, OSF, institutional repositories, GitHub release pages.
-- `anysearch_lead`: AnySearch leads before scholarly verification.
-- `llm_web_lead`: Kimi/TinyFish/general LLM-web leads before scholarly verification.
-- `x_social_lead`: Grok/X/Twitter leads before scholarly verification.
+### 第二步：扩展检索式
 
-### 4. Verification
+Skill 会生成多层检索式，例如：
 
-The Skill does not treat LLM output, web snippets, or social posts as bibliographic truth. A record becomes a direct citation candidate only after stable fields are confirmed:
+- 题名精确检索。
+- 研究对象 + 问题意识。
+- 研究对象 + 学科领域。
+- 研究对象 + 方法词。
+- 中文同义词、古今术语、异名。
+- 英文对应词。
+- 针对特定数据库、期刊、出版社或机构仓储的 `site:` 检索式。
 
-- Title
-- Author names
-- Year
-- Venue
-- DOI, URL, repository link, or database record
-- Full-text availability when relevant
+### 第三步：分层使用不同来源
 
-### 5. Grading
+不同来源的可信度和用途不同。这个 Skill 会把它们分开处理：
 
-Each result receives a grade:
+- **开放学术元数据**：如 OpenAlex、Crossref、Semantic Scholar，适合核对题名、作者、年份、DOI、引用关系。
+- **中文数据库记录**：如 CNKI、万方、维普、国家哲学社会科学文献中心等，适合确认中文论文和期刊信息。
+- **海外数据库和出版社页面**：如 Web of Science、Scopus、JSTOR、Project MUSE、Oxford Academic、Cambridge Core、Brill 等。
+- **开放仓储和预印本平台**：如 arXiv、Zenodo、OSF、机构知识库等。
+- **AI 或网页搜索线索**：如 Kimi、TinyFish、AnySearch、普通网页搜索等，只能作为线索。
+- **Grok/X 或社交媒体线索**：适合发现新论文、新工具、新数据集、作者自述或会议讨论，但不能直接当成学术文献引用。
 
-- **A**: verified, directly useful, cite candidate.
-- **B**: plausible and worth close reading.
-- **C**: background or peripheral literature.
-- **D**: duplicate, book/news/wiki/column/search page, or off-topic.
+### 第四步：先核验，再分级
 
-X/Twitter-only or LLM-only hits cannot be Grade A until independently verified.
+Skill 会尽量把每条结果分成 A/B/C/D 四类：
 
-## Optional Integrations
+- **A 类**：已经核验，和选题直接相关，可以作为引用候选。
+- **B 类**：看起来相关，值得进一步精读。
+- **C 类**：背景性、外围性材料，可以辅助理解。
+- **D 类**：重复、跑题、新闻、百科、栏目文章、搜索页面，或者无法核验。
 
-This Skill can use these tools when your Codex environment has them:
+一个重要规则是：**只有 AI 搜索、网页搜索或 X/Twitter 线索的条目，不能直接评为 A 类。**
+
+它们必须先通过 DOI、出版社页面、数据库记录、开放学术元数据或机构仓储确认。
+
+### 第五步：做引文链扩展
+
+当找到一篇很重要的种子论文后，Skill 会继续建议三种扩展：
+
+- **向前查**：看这篇论文引用了哪些早期研究。
+- **向后查**：看后来的论文谁引用了它。
+- **相似论文扩展**：用 Semantic Scholar、Google Scholar、ResearchRabbit、Connected Papers、Litmaps 等工具查相关论文。
+
+这样可以避免只停留在关键词搜索结果，而是进入真实的学术讨论网络。
+
+## 这个 Skill 的特点
+
+### 1. 不把“搜到”当成“可靠”
+
+很多 AI 检索最大的问题，是把网页片段、模型回答、社交媒体帖子直接混进参考文献。这个 Skill 明确区分：
+
+- 线索
+- 数据库记录
+- 出版社页面
+- 开放元数据
+- 可直接引用文献
+
+这能明显降低误引、错引和引用虚假文献的风险。
+
+### 2. 适合中文学术场景
+
+它不仅考虑英文数据库，也特别考虑中文学术检索中常见的来源：
+
+- CNKI
+- 万方
+- 维普
+- 国家哲学社会科学文献中心
+- CSSCI 期刊
+- 北大核心期刊
+- 台湾地区学术平台
+
+对中国人文学术写作来说，这一点很重要。
+
+### 3. 适合跨语种检索
+
+中文题目经常需要转成英文关键词，英文研究也可能使用不同表达。Skill 会提醒你同时处理：
+
+- 中文关键词
+- 英文关键词
+- 历史术语
+- 学科术语
+- 同义表达
+- 人名、地名、机构名的不同译法
+
+### 4. 保留检索过程
+
+它强调记录：
+
+- 用了哪个数据库
+- 用了什么检索式
+- 哪天搜的
+- 有多少结果
+- 保留了多少
+- 排除了哪些
+- 为什么排除
+
+这对写综述、开题、课题申报、论文修改都很有用。
+
+### 5. 可以和多种工具配合
+
+它本身不是一个固定数据库，也不是一个爬虫。它是一套方法，可以调用你本地或 Codex 环境中可用的工具，例如：
 
 - OpenAlex
 - Crossref
@@ -128,36 +200,75 @@ This Skill can use these tools when your Codex environment has them:
 - Kimi / Moonshot
 - TinyFish
 - AnySearch
-- Grok/X through OpenRouter
-- Browser-assisted CNKI or Google Scholar workflows
-- Zotero, BibTeX, RIS, or GB/T 7714 export workflows
+- Grok/X / OpenRouter
+- Google Scholar 浏览器流程
+- CNKI 浏览器流程
+- Zotero、BibTeX、RIS、GB/T 7714 导出流程
 
-No integration is mandatory. If a tool is unavailable, the Skill should still produce a clear manual search route and audit checklist.
+如果某个工具不可用，它仍然可以输出人工检索路线和复核清单。
 
-## Credentials
+## 使用时要注意什么？
 
-Use environment variables or a private credential store. Never paste raw keys into prompts, reports, scripts, public Markdown, or command history.
+### 1. 不要把 AI 搜索结果直接当参考文献
 
-Common environment variable names:
+AI 搜索适合找线索，但最终参考文献必须用稳定来源核验，例如：
 
-- `KIMI_API_KEY`
-- `MOONSHOT_API_KEY`
-- `TINYFISH_API_KEY`
-- `ANYSEARCH_API_KEY`
-- `OPENROUTER_API_KEY`
+- DOI
+- 出版社页面
+- 期刊官网
+- OpenAlex / Crossref / Semantic Scholar
+- CNKI / 万方 / 维普
+- 机构知识库
+- 合法开放获取 PDF
 
-## Safety And Ethics
+### 2. 不要绕过数据库或出版社的访问限制
 
-- Do not use unauthorized full-text routes.
-- Prefer DOI, publisher pages, institutional access, library links, open-access PDFs, and legal repository copies.
-- CAPTCHA or login walls should be handled manually by the user.
-- Treat social-media posts as discovery evidence, not academic literature, unless the research object is social-media discourse itself.
-- Keep private drafts, API keys, passwords, and personally sensitive text out of third-party search APIs unless the user explicitly approves the risk.
+这个 Skill 不鼓励也不支持未经授权的全文获取方式。遇到登录、验证码、机构权限，应由用户按合法渠道处理。
 
-## Example Output Skeleton
+### 3. 不要把私密内容发给第三方搜索接口
 
-See [examples/output-skeleton.md](examples/output-skeleton.md).
+如果使用 Kimi、AnySearch、TinyFish、OpenRouter 等服务，请注意：
 
-## License
+- 不要发送未公开论文全文。
+- 不要发送 API key、密码、个人身份信息。
+- 不要把敏感项目材料直接交给第三方接口，除非你明确接受这个风险。
 
-MIT License. See [LICENSE](LICENSE).
+### 4. 检索结果需要人工判断
+
+Skill 可以帮你建立路线、整理候选、提示核验，但不能替代学术判断。尤其是：
+
+- 文献是否真正支持你的论点
+- 研究是否过时
+- 方法是否可靠
+- 期刊或会议质量如何
+- 某篇文章在领域内的地位如何
+
+这些仍然需要研究者自己判断。
+
+## 常见提示词
+
+```text
+用“学术论文搜索”这个 Skill，围绕【题目】设计一套文献检索路线。
+请输出中文检索词、英文检索词、重点数据库、候选文献分级、可引用文献、精读队列和人工复核清单。
+```
+
+```text
+用“学术论文搜索”这个 Skill，帮我补充这篇论文的国内外研究综述材料。
+请把结果分成 A/B/C/D 四类，并说明哪些已经核验、哪些只是网页或 AI 线索。
+```
+
+```text
+用“学术论文搜索”这个 Skill，从这几篇种子论文出发，做引文链扩展。
+请分别列出向前引用、向后被引和相似论文。
+```
+
+## 文件说明
+
+- `SKILL.md`：Skill 的主体规则。
+- `agents/openai.yaml`：在 Codex 中显示的默认提示配置。
+- `examples/output-skeleton.md`：检索结果输出模板。
+- `README.md`：当前这份中文说明。
+
+## 许可证
+
+本项目使用 MIT License。详见 [LICENSE](LICENSE)。
